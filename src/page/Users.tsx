@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { TableUsers } from '../components/TableUsers'
 
 const User = () => {
-    const [users, setUsers] = useState()
+    const [usersValue, setUsersValue] = useState()
     useEffect(
         () => {
             async function promis() {
                 const response = await fetch('https://randomuser.me/api?results=100&noinfo');
-                const data = await response.json().then(data => setUsers(data.results))
+                const data = await response.json().then(data => setUsersValue(data.results))
                 return data
             }
             promis()
@@ -17,7 +17,7 @@ const User = () => {
 
     return (
         <>
-            {users !== undefined && <TableUsers datos={users} />}
+            {usersValue !== undefined && <TableUsers datos={usersValue} />}
         </>
     );
 }

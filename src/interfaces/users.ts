@@ -11,6 +11,7 @@ export interface Info {
 }
 
 export interface Result {
+    more?: boolean;
     gender?:     string;
     name?:       Name;
     location?:   Location;

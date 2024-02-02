@@ -14,6 +14,7 @@ import {
 import iconDown from '../assets/iconDown.svg'
 import iconLeft from '../assets/iconLeft.svg'
 import iconLeftDouble from '../assets/iconLeftDouble.svg'
+import iconOpenModal from '../assets/iconModal.svg'
 import { Result } from '../interfaces/users';
 import { UserInformation } from './UserInformation';
 
@@ -26,7 +27,7 @@ const columna = [
     columnHelper.accessor(row => row.picture?.medium, {
         id: 'img',
         enableSorting: false,
-        header: () => <p>Foto</p>,
+        header: () => <p>Pic</p>,
         cell: info => <div id='img' className='flex items-center justify-center'>
             <img src={`${info.row.original.picture?.medium}`} width={40} height={40} alt='imagen' />
         </div>,
@@ -45,8 +46,8 @@ const columna = [
     }),
     columnHelper.accessor(row => row.name?.first, {
         id: 'name',
-        enableSorting: true,
-        header: () => <p className='cursor-pointer underline'>Name</p>,
+        enableSorting: false,
+        header: () => <p>Name</p>,
         cell: info => <p id={'name'} className='text-white'>{info.row.original.name?.first}</p>,
     }),
     columnHelper.accessor(row => row.name?.last, {
@@ -57,8 +58,8 @@ const columna = [
     }),
     columnHelper.accessor(row => row.location?.country, {
         id: 'country',
-        enableSorting: true,
-        header: () => <p className='cursor-pointer underline'>Country</p>,
+        enableSorting: false,
+        header: () => <p>Country</p>,
         cell: info => info.row.original.location?.country,
     }),
     columnHelper.accessor(row => row.location?.city, {
@@ -66,6 +67,12 @@ const columna = [
         enableSorting: false,
         header: () => <p>City</p>,
         cell: info => info.row.original.location?.city,
+    }),
+    columnHelper.accessor(row => row, {
+        id: 'modal',
+        enableSorting: false,
+        header: () => <p>More</p>,
+        cell: ()=> <div className='flex justify-center'><img src={iconOpenModal} width={30} height={30} alt='openModal'/></div>
     }),
 ]
 const TableUsers = ({ datos }: Props) => {
@@ -94,9 +101,10 @@ const TableUsers = ({ datos }: Props) => {
             <h1 className='font-bold text-3xl'>Random Users</h1>
             {/*  Control de row mostrados*/}
             <div className='w-[90%] flex gap-2 items-center py-2'>
-                <p>Usuarios en tabla </p>
+                <p className='text-white'>Users in table </p>
                 <select
                     /* Valor inicial 5 */
+                    className='text-white bg-[#242424] border-solid border-2 border-white p-1 text-base'
                     value={table.getState().pagination.pageSize}
                     onChange={(e) => { table.setPageSize(Number(e.target.value)) }}>
                     {[5, 10, 20, 30, 50].map((pageSize) => (
@@ -115,10 +123,11 @@ const TableUsers = ({ datos }: Props) => {
                                 return (
                                     <th
                                         key={header.id}
-                                        onClick={header.column.getToggleSortingHandler()}
                                         className='border border-[#AFAFAF] p-1'
                                     >
-                                        <div className='flex items-center justify-center'>
+                                        <div 
+                                        onClick={header.column.getToggleSortingHandler()}
+                                        className='flex items-center justify-center'>
                                             {/* Iconos Sort */}
                                             {isSortable && sort === "asc"
                                                 ? <img src={iconDown} width={24} height={24} alt='Icon' />

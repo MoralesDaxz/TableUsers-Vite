@@ -1,13 +1,10 @@
-
 import './App.css'
-import { User } from './page/user'
+import { AppRouter } from './router/AppRouter'
 
 function App() {
 
   return (
-    <>
-      <User />
-    </>
+    <AppRouter />
   );
 }
 
